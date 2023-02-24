@@ -1,6 +1,5 @@
 package delete;
 
-
 import delete.entity.Author;
 import delete.entity.Book;
 import org.hibernate.Criteria;
