@@ -20,22 +20,32 @@ CriteriaDelete, в свою очередь, используется для уд
 Таким образом, можно сказать, что CriteriaQuery и CriteriaDelete отличаются своей целью: первый используется для выборки данных, в то время как второй - для удаления данных из базы данных.
 
 **Удаление с помощью CriteriaDelete**
+
 Для удаления книг по автору с помощью CriteriaBuilder вам необходимо выполнить несколько шагов:
 
 1. Создайте экземпляр CriteriaBuilder и CriteriaDelete:
-'CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaDelete<Book> cd = cb.createCriteriaDelete(Book.class);'
 
-2. Получите корневую сущность, к которой вы хотите применить критерии, и установите ее алиас:
+```java
+CriteriaBuilder cb = session.getCriteriaBuilder();
+CriteriaDelete<Book> cd = cb.createCriteriaDelete(Book.class);
+```
 
-3. Определите условие, которое определяет, какие книги нужно удалить. Например, если вы хотите удалить все книги, написанные автором с определенным идентификатором, вы можете использовать следующий код:
+2. Получите корневую сущность, к которой вы хотите применить критерии:
 
-Predicate authorPredicate = cb.equal(authorJoin.get("id"), authorId);
-где authorId - это идентификатор автора, чьи книги вы хотите удалить.
+```java
+Root<Book> root = cd.from(Book.class);
+```
+
+3. Определите условие, которое определяет, какие книги нужно удалить:
+
+```java
+cd.where(cb.equal(root.get("author"), author));
+```
 
 4. Добавьте условие к удалению и выполните запрос:
-java
-Copy code
-delete.where(authorPredicate);
-entityManager.createQuery(delete).executeUpdate();
-5. После выполнения этого кода все книги, написанные автором с заданным идентификатором, будут удалены из таблицы book.
+
+```java
+Query query = session.createQuery(cd);
+query.executeUpdate();
+```
+
