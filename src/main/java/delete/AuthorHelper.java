@@ -1,6 +1,5 @@
 package delete;
 
-
 import delete.entity.Author;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,9 +9,6 @@ import javax.persistence.Query;
 import javax.persistence.criteria.*;
 import java.util.List;
 
-/**
- * Created by Asus on 01.11.2017.
- */
 public class AuthorHelper {
 
     private static final Logger LOG = Logger.getLogger( AuthorHelper.class.getName() );
